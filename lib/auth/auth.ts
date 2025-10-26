@@ -1,5 +1,4 @@
-import { generatePKCE } from "@openauthjs/openauth/pkce";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import type { PKCEPair, AuthorizationFlow, TokenResult, ParsedAuthInput, JWTPayload } from "../types.js";
 
 // OAuth constants (from openai/codex)
@@ -8,6 +7,29 @@ export const AUTHORIZE_URL = "https://auth.openai.com/oauth/authorize";
 export const TOKEN_URL = "https://auth.openai.com/oauth/token";
 export const REDIRECT_URI = "http://localhost:1455/auth/callback";
 export const SCOPE = "openid profile email offline_access";
+
+/**
+ * Encode bytes using URL-safe base64 without padding
+ * @param data - Bytes to encode
+ * @returns Base64URL string
+ */
+function toBase64Url(data: Uint8Array): string {
+	return Buffer.from(data)
+		.toString("base64")
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/u, "");
+}
+
+/**
+ * Generate PKCE verifier/challenge pair using SHA256 (S256)
+ * @returns PKCE verifier and challenge
+ */
+async function generatePKCE(): Promise<PKCEPair> {
+	const verifier = toBase64Url(randomBytes(32));
+	const challenge = toBase64Url(createHash("sha256").update(verifier).digest());
+	return { verifier, challenge };
+}
 
 /**
  * Generate a random state value for OAuth flow

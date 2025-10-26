@@ -119,7 +119,21 @@ export async function getCodexInstructions(): Promise<string> {
 
 		// Fall back to bundled version
 		console.error("[openai-codex-plugin] Falling back to bundled instructions");
-		return readFileSync(join(__dirname, "codex-instructions.md"), "utf8");
+		try {
+			return readFileSync(join(__dirname, "codex-instructions.md"), "utf8");
+		} catch (fallbackError) {
+			const errMessage =
+				fallbackError instanceof Error
+					? fallbackError.message
+					: String(fallbackError);
+			console.error(
+				"[openai-codex-plugin] Failed to load bundled instructions:",
+				errMessage,
+			);
+			throw new Error("Bundled Codex instructions unavailable", {
+				cause: fallbackError,
+			});
+		}
 	}
 }
 

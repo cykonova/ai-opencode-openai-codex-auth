@@ -7,7 +7,7 @@ import type { GitHubRelease, CacheMetadata } from "../types.js";
 // Codex instructions constants
 const GITHUB_API_RELEASES = "https://api.github.com/repos/openai/codex/releases/latest";
 const CACHE_DIR = join(homedir(), ".opencode", "cache");
-const CACHE_FILE = join(CACHE_DIR, "codex-instructions.md");
+const CACHE_FILE = join(CACHE_DIR, "AGENTS.md");
 const CACHE_METADATA_FILE = join(CACHE_DIR, "codex-instructions-meta.json");
 
 const __filename = fileURLToPath(import.meta.url);

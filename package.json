@@ -28,7 +28,7 @@
     "url": "https://github.com/numman-ali/opencode-openai-codex-auth/issues"
   },
   "scripts": {
-    "build": "tsc && cp lib/oauth-success.html dist/lib/ && cp lib/prompts/codex-instructions.md dist/lib/prompts/",
+    "build": "tsc && cp lib/oauth-success.html dist/lib/",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -44,14 +44,17 @@
     "node": ">=20.0.0"
   },
   "peerDependencies": {
-    "@opencode-ai/plugin": "^0.15.18"
+    "@opencode-ai/plugin": "^0.13.7"
   },
   "devDependencies": {
-    "@opencode-ai/plugin": "^0.15.18",
-    "@opencode-ai/sdk": "^0.15.18",
-    "@types/node": "^24.9.1",
+    "@opencode-ai/plugin": "^0.13.7",
+    "@opencode-ai/sdk": "^0.13.9",
+    "@types/node": "^24.6.2",
     "@vitest/ui": "^3.2.4",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@openauthjs/openauth": "^0.4.3"
   }
 }
